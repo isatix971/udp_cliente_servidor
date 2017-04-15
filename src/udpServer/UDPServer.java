@@ -17,7 +17,7 @@ class UDPServer {
         if (cnx == null) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                cnx = DriverManager.getConnection("jdbc:mysql://localhost/java_mysql", "root", "");
+                cnx = DriverManager.getConnection("jdbc:mysql://localhost/gpssace", "root", "lalola1415");
             } catch (SQLException ex) {
                 throw new SQLException(ex);
             } catch (ClassNotFoundException ex) {
@@ -43,9 +43,16 @@ class UDPServer {
             String sentence = new String(receivePacket.getData());
             String[] fragmento = sentence.split(",");
 
-            for (int i = 0; i < fragmento.length; i++) {
-                System.out.println(i + ": " + fragmento[i]);
-            }
+//            for (int i = 0; i < fragmento.length; i++) {
+//                System.out.println(i + ": " + fragmento[i]);
+//            }
+            Connection conex = obtener();
+            
+            Statement stmt = conex.createStatement();
+            
+            String sql;
+            sql = "INSERT INTO coordenadas (id, x, y, comentario) VALUES (NULL, '3', '4', 'dfsg');";
+            ResultSet rs = stmt.executeQuery(sql);
 
             System.out.println("RECEIVED: " + sentence);
             InetAddress IPAddress = receivePacket.getAddress();
